@@ -1,12 +1,15 @@
-# Open and read the access log file
 with open("access.log", "r") as file:
     logs = file.readlines()
 
 print("=== Scanning Logs for Suspicious Activity ===")
 
-# Updated keywords list including 400, 500, SELECT, and UNION
-keywords = ['401', '403', '400', '500', 'SELECT', 'UNION']
-
 for line in logs:
-    if any(key in line for key in keywords):
-        print(line.strip())
+    clean_line = line.strip()
+    if "UNION" in clean_line or "SELECT" in clean_line:
+        print(f"{clean_line} -> [SQL Injection] Attacker is trying to dump user credentials or bank account data from the database.")
+    elif "401" in clean_line:
+        print(f"{clean_line} -> [Unauthorized Access] Attacker is probing restricted pages without valid login credentials.")
+    elif "403" in clean_line:
+        print(f"{clean_line} -> [Forbidden Access] Attacker is attempting unauthorized actions on the login endpoint.")
+    elif "400" in clean_line or "500" in clean_line:
+        print(f"{clean_line} -> [Server/Request Error] Malformed input or backend query crash indicating active probing.")
