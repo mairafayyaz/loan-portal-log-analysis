@@ -1,0 +1,5 @@
+192.168.1.15 - - [17/Nov/2026:10:02:15] "GET /portal/balance HTTP/1.1" 401 128
+192.168.1.16 - - [17/Nov/2026:10:03:20] "GET /portal/admin?id=1 UNION SELECT username, password FROM users HTTP/1.1" 500 450
+192.168.1.18 - - [17/Nov/2026:10:05:30] "POST /portal/login HTTP/1.1" 403 230
+192.168.1.19 - - [17/Nov/2026:10:06:12] "GET /portal/transfer?to=account SELECT * FROM accounts HTTP/1.1" 400 310
+192.168.1.21 - - [17/Nov/2026:10:08:45] "GET /portal/settings HTTP/1.1" 401 110
