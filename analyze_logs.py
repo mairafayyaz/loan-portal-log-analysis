@@ -7,7 +7,6 @@ for line in logs:
     clean_line = line.strip()
     labels = []
 
-    # Check status codes first with commas instead of em dashes
     if " 500 " in clean_line:
         labels.append("[500 Internal Server Error] Backend database crashed/errored, input reached the query")
     if " 400 " in clean_line:
@@ -15,9 +14,8 @@ for line in logs:
     if " 401 " in clean_line:
         labels.append("[401 Unauthorized] Attacker probing restricted pages without valid login credentials")
     if " 403 " in clean_line:
-        labels.append("[403 Forbidden] Brute force login attempt blocked by server")
+        labels.append("[403 Forbidden] Blocked login attempt, single request is not brute force")
 
-    # Check SQL injection patterns separately
     if "UNION SELECT" in clean_line:
         labels.append("[SQL Injection] Attacker trying to dump user credentials from database via UNION")
     elif "SELECT *" in clean_line:
