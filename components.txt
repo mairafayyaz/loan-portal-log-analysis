@@ -1,0 +1,5 @@
+Loan Portal System Components
+
+1. User Interface (Client): The frontend login and portal screen used by loan officers to sign in, view client balances, and process transfers.
+2. Webserver: The backend application server that receives HTTP requests from the client, routes endpoints like /portal/login and /portal/transfer, logs traffic, and communicates with the database.
+3. Database: The backend storage system holding sensitive tables for User Credentials and Account Data, which processes SQL queries sent by the webserver.
