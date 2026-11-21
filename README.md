@@ -18,3 +18,12 @@ Simulated security log analysis, system architecture mapping, and STRIDE threat 
 
 ```bash
 python analyze_logs.py
+## Threat Model Summary
+
+Using the 3-tier portal diagram and log findings from `access.log`, five STRIDE threats were identified, ranked by risk level, and paired with mitigations (full details in `threat_model.md`):
+
+* **Tampering (High):** SQL injection payloads (`UNION SELECT` and `SELECT *`) targeting `/portal/admin` and `/portal/transfer`, mitigated with parameterized queries and strict input validation.
+* **Information Disclosure (High):** Potential exposure of `User Credentials`, `Account Data`, or internal server details via SQL injection or verbose `500` responses, mitigated with strong password hashing, least-privilege database accounts, generic error pages, and HTTPS.
+* **Spoofing (Medium):** Unauthenticated probing (`401`) on `/portal/balance` and `/portal/settings` plus a blocked login attempt (`403` on `POST /portal/login`), mitigated with strict session checks, login rate limiting, and monitoring for repeated failed attempts from the same IP.
+* **Elevation of Privilege (Medium):** Potential unauthorized access to administrative endpoints (`/portal/admin`) or fund transfers (`/portal/transfer`), mitigated with server-side role-based access control (RBAC) on every request.
+* **Denial of Service (Low):** Heavy queries, malformed requests, or repeated login attempts affecting portal availability or filling up logs, mitigated with rate limiting, database query timeouts, and log rotation.
